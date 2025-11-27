@@ -1,25 +1,55 @@
+<!--
+  بەشی پاراستنی مافی کۆپیکردن (Copyright Protection Section)
+  =======================================================
+  مافی کۆپیکردن (C) 2025 Ibrahim khalil jameel.
+  هەموو مافەکانی پارێزراون.
+
+  بەکارهێنانی ئەم کۆدە بەبێ مۆڵەتی نووسراوی خاوەندارێتی قەدەغەیە.
+  ئەم نەرمەکاڵایە موڵکی تایبەتی Ibrahim khalil jameelـیە.
+  =======================================================
+-->
+<!--
+  ئەم فایلە کۆدی وێبسایتی Bagera Live TVـیە.
+  گۆڕانکاری نوێ: چارەسەرکردنی کێشەی کلیک نەکردنی دوگمەکان (Z-index fix) و چاککردنی خزاندنی شاشەی مۆبایل (Scrolling fix).
+-->
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ku-Latn" dir="rtl">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3032189625676969"
-     crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-3032189625676969">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagera Live TV</title>
+    <title>Bagera TV - چاڤدێری زێندە</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <!-- ئایکۆنی Font Awesome بۆ هێما سادەکان -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Oswald:wght@500&display=swap" rel="stylesheet">
     
+    <!-- PWA Manifest Data (بۆ بادینی ڕێکخراوە) -->
+    <link rel="manifest" href="data:application/json;charset=utf-8, {
+      %22name%22:%20%22Bagera%20Live%20TV%22,%
+      22short_name%22:%20%22Bagera%20TV%22,%
+      22description%22:%20%22%DA%86%D8%A7%DA%ڤ%D8%AF%DB%8E%D8%B1%DB%8C%20%DA%A9%DB%95%D9%86%D8%A7%DA%B5%DB%8E%D9%86%20%DA%A9%D9%88%D8%B1%D8%AF%DB%8C%20%D9%88%20%D8%AC%DB%8C%D9%87%D8%A7%D9%86%DB%8C%20%D8%A8%DB%8C%20%DA%95%DB%95%D9%88%DB%95%DB%8C%20%D8%B2%DB%8E%D9%86%D8%AF%DB%95%22,%
+      22start_url%22:%20%22/%22,%
+      22display%22:%20%22standalone%22,%
+      %22background_color%22:%20%22%230d0d0d%22,%
+      %22theme_color%22:%20%22%23E50914%22,%
+      %22icons%22:%20[{
+        %22src%22:%20%22https://placehold.co/192x192/E50914/ffffff?text=BTV%22,%
+        22sizes%22:%20%22192x192%22,%
+        %22type%22:%20%22image/png%22
+      },{
+        %22src%22:%20%22https://placehold.co/512x512/E50914/ffffff?text=BTV%22,%
+        22sizes%22:%20%22512x512%22,%
+        %22type%22:%20%22image/png%22
+      }]
+    }">
+
     <style>
+        /* ڕەنگێن نێتفلێکس */
         :root {
-            --primary-color: #ff5722;
-            --secondary-color: #2196f3;
-            --dark-bg: #1a1a1a;
-            --header-bg: #2a2a2a;
-            --text-color: #fff;
-            --channel-btn-bg: #333;
-            --channel-btn-hover: #444;
-            --channel-btn-active: #ff5722;
+            --netflix-red: #E50914; 
+            --deep-black: #0d0d0d; 
+            --mid-black: #1a1a1a; 
+            --light-grey: #e5e5e5; 
         }
         
         * {
@@ -29,287 +59,462 @@
         }
 
         body {
-            font-family: 'Poppins', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-            color: var(--text-color);
+            font-family: 'Roboto', 'Oswald', Arial, sans-serif;
+            background-color: var(--deep-black);
+            color: var(--light-grey);
             line-height: 1.6;
+            /* ڕێکخستنا ئاراستەیا دەقی بۆ کوردی بادینی */
+            direction: rtl; 
+            
+            /* چاککردن بۆ خزاندن: ڕێگە بە خزانی ناوەڕۆکی لاپەڕە بدە */
+            overflow-y: auto; 
+            /* لابردنی min-height: 100vh بۆ چارەسەرکردنی کێشەی نەخشەی مۆبایل */
         }
 
         header {
-            background: linear-gradient(to right, var(--header-bg), var(--primary-color));
+            background-color: var(--mid-black);
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
             position: relative;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 5px solid var(--netflix-red); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10; /* دڵنیابوون لەوەی سەرەوە دیارە */
         }
 
         .logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.8rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-family: 'Oswald', sans-serif; 
+            font-size: 3.5rem;
+            color: var(--netflix-red);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin: 10px 0;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px rgba(229, 9, 20, 0.8), 0 0 20px rgba(229, 9, 20, 0.5); 
+            margin-bottom: 15px;
             display: inline-block;
-            padding: 5px 20px;
-            border: 2px solid var(--primary-color);
-            border-radius: 10px;
+        }
+        
+        #install-button {
+            background-color: var(--netflix-red);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px; 
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(229, 9, 20, 0.5);
+            text-transform: uppercase;
+        }
+        
+        #install-button:hover {
+            background-color: #ff3333;
+            transform: scale(1.05);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 20px 10px; 
+            /* دڵنیابوون لەوەی کۆنتێنەرەکە بەشی خوارەوەی پەرەکە دەگرێتەوە */
+            z-index: 10;
         }
 
         .player-container {
             position: relative;
-            padding-bottom: 65%; /* تغيير من 56.25% إلى 65% لجعل المشغل أكبر */
+            padding-bottom: 60%; 
             height: 0;
             overflow: hidden;
             margin-bottom: 25px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             background: #000;
         }
 
         #main-player {
             position: absolute;
             top: 0;
-            left: 0;
+            right: 0; /* گونجاندن بۆ RTL */
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
         }
 
+        /* ستایلی Grid بۆ 4 ستوون ل سەر دیسکتۆپ */
         .channel-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr); 
             gap: 15px;
             margin-top: 20px;
         }
 
         .channel-btn {
-            background-color: var(--channel-btn-bg);
-            border: none;
-            color: white;
-            padding: 15px 10px;
+            background-color: var(--mid-black);
+            border: 1px solid #333;
+            color: var(--light-grey);
+            padding: 18px 10px; 
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 6px;
             transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            display: flex; /* بۆ ڕێکخستنی ئایکۆن و تێکست */
+            align-items: center;
+            justify-content: center;
+            
+            /* چارەسەری کێشەی کلیک نەکردن (Z-index Fix) */
+            position: relative; 
+            z-index: 20; 
         }
 
         .channel-btn:hover {
-            background-color: var(--channel-btn-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            background-color: #2a2a2a;
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4);
+            border-color: var(--netflix-red);
         }
 
         .channel-btn.active {
-            background-color: var(--channel-btn-active);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 87, 34, 0.4);
+            background-color: var(--netflix-red);
+            border-color: var(--light-grey);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.7);
         }
+        
+        .channel-icon {
+            font-size: 1.5rem;
+            margin-left: 8px; /* بۆ RTL، بۆشایی لە لای چەپ زیاد دەکەین */
+        }
+        
+        .channel-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ستایلکردنی تایبەت بە کەناڵە کوردییەکان (بۆ زیاتر جیاکردنەوە) */
+        .kurdish-btn .channel-icon {
+            color: #FFD700; /* زێڕین */
+        }
+        /* ستایلکردنی تایبەت بە کەناڵە وەرزشییەکان */
+        .sport-btn .channel-icon {
+            color: #1aff00; /* سەوز */
+        }
+        /* ستایلکردنی تایبەت بە کەناڵە جیهانییەکان */
+        .world-btn .channel-icon {
+            color: #00BFFF; /* شین */
+        }
+
 
         .marquee-container {
             overflow: hidden;
             white-space: nowrap;
             width: 100%;
-            background: linear-gradient(to right, #0066FF, #2196f3);
-            padding: 12px 0;
+            background-color: var(--netflix-red);
+            padding: 10px 0;
             margin: 15px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 102, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         .marquee-content {
             display: inline-block;
             animation: marquee 25s linear infinite;
-            padding-left: 100%;
-            font-size: 1.2rem;
+            padding-right: 100%; /* گۆڕینا ئاراستە بۆ RTL */
+            font-size: 1.1rem;
         }
-
-        .marquee-content:hover {
-            animation-play-state: paused;
+        
+        /* چاککرنا ئەنیمەیشنا مەڕاسیم بۆ RTL */
+        @keyframes marquee {
+          0% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
         }
 
         .custom-font {
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
             direction: rtl;
             color: white;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
+            font-weight: 500;
         }
 
         .category-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin: 25px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--primary-color);
-            display: inline-block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.7rem;
+            color: var(--light-grey);
+            margin: 35px 0 15px;
+            padding-bottom: 5px;
+            border-right: 5px solid var(--netflix-red); /* گۆڕین بۆ لای ڕاست */
+            padding-right: 10px;
+            padding-left: 0;
+            display: block;
         }
 
         footer {
             text-align: center;
             padding: 20px;
             margin-top: 40px;
-            background-color: var(--header-bg);
-            color: #aaa;
-            font-size: 0.9rem;
-            border-top: 1px solid #444;
+            background-color: var(--mid-black);
+            color: #777;
+            font-size: 0.8rem;
+            border-top: 1px solid #333;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
         }
 
+        .modal-content {
+            background-color: var(--mid-black);
+            color: var(--light-grey);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid var(--netflix-red);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--netflix-red);
+        }
+
+        .modal-content button {
+            background-color: var(--netflix-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #ff3333;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* گونجاندن بۆ شاشەی مۆبایل و تابلێت */
+        @media (max-width: 1024px) {
+            .channel-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
+            /* 2 ستوون بۆ مۆبایل */
             .channel-list {
                 grid-template-columns: repeat(2, 1fr);
             }
             
             .logo {
-                font-size: 2rem;
-            }
-            
-            .custom-font {
-                font-size: 18px;
+                font-size: 2.5rem;
             }
             
             .player-container {
-                padding-bottom: 70%; /* زيادة حجم المشغل على الشاشات المتوسطة */
+                padding-bottom: 65%;
+            }
+            
+            /* گۆڕانکارییەکە لێرەیە: بۆ مۆبایل، زیادکردنی بۆشایی بۆ خوارەوە بۆ ئەوەی Footer نەی شارێتەوە */
+            .container {
+                padding-bottom: 100px; /* زیاتر کراوە بۆ دڵنیایی */
             }
         }
 
         @media (max-width: 480px) {
+            /* 2 ستوون بۆ بچووکترین شاشەکان بۆ گەورەیی دوگمەکان */
             .channel-list {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo {
-                font-size: 1.8rem;
-                padding: 5px 15px;
-            }
-            
-            .marquee-content {
-                animation-duration: 20s;
-            }
-            
-            .custom-font {
-                font-size: 16px;
-            }
-            
-            .player-container {
-                padding-bottom: 75%; /* زيادة حجم المشغل على الشاشات الصغيرة */
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">Bagera Live TV</div>
+        <div class="logo">Bagera TV</div>
+        <!-- دوگمەیا PWA بۆ دامەزراندنا ئەپێ ل سەر ئامیرێ تە -->
+        <button id="install-button">دامەزراندنا ئەپێ</button>
     </header>
     
     <div class="marquee-container">
         <div class="marquee-content">
             <p class="custom-font">
-                ئاكه هدارى: كارى به رنامه ى هيش بدوماهى نه هاتييه و نيزيكترين ده م و باشترين شيوه كه فيته خزمه تى دا بو بتر بيزانينان دشين به يوه ندى بمه بكه ن: 07508615141
+                ئاگەهدارى: کارێ پڕۆگرامێ هێش ب دووماهی نەهاتیە و دێ د نێزیکترین دەم دا ب باشترین شێوە هێتە خزمەتکرن. بۆ پتر پێزانینان، پەیوەندی ب مە بکە: 07508615141
             </p>
         </div>
     </div>
 
     <div class="container">
         <div class="player-container">
+            <!-- ڤیدیۆ دێ ل ڤێرێ نیشان دەت -->
             <iframe id="main-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
-        <!-- تم نقل القنوات الكردية إلى الأعلى -->
-        <h3 class="category-title">القنوات الكردية</h3>
+        <!-- کەناڵێن کوردی (Kurdish Channels) -->
+        <h3 class="category-title">کەناڵێن کوردی</h3>
         <div class="channel-list">
-            <button class="channel-btn active" data-src="https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8">Zagros TV</button>
-            <button class="channel-btn" data-src="https://6476e46b58f91.streamlock.net/liveTrans/KurdmaxS0rani!/playlist.m3u8">Kurdmax TV</button>
-            <button class="channel-btn" data-src="https://6476e46b58f91.streamlock.net/liveTrans/SHOW2/playlist.m3u8">KurdmaxShow TV</button>
-            <button class="channel-btn" data-src="https://svs.itworkscdn.net/rudawlive/rudawlive.smil/playlist.m3u8">Rudaw TV</button>
-            <button class="channel-btn" data-src="https://d1x82nydcxndze.cloudfront.net/live/index.m3u8">Kurdistan24</button>
-            <button class="channel-btn" data-src="https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/chunklist_w1840895338_b1700000_sleng_t64MTA4MHA=.m3u8">Kurdistan TV</button>
-            <button class="channel-btn" data-src="https://live.kwikmotion.com/waarmedialive/waarmedia.smil/playlist.m3u8">WAAR TV</button>
-            <button class="channel-btn" data-src="https://app-live.org/live/3268334b/index.m3u8">Amozhgari TV</button>
-            <button class="channel-btn" data-src="https://ava.site/upload/ava.m3u8">AVA TV</button>
-            <button class="channel-btn" data-src="https://zindikurmanci.zaroktv.com.tr/hls/stream.m3u8">Zarok TV</button>
-            <button class="channel-btn" data-src="https://nrttv.com/streamNRT.aspx">NRT TV</button>
-            <button class="channel-btn" data-src="https://maxtvs.net/channels?chname=Duhok+TV">Duhok TV</button>
+            <button class="channel-btn active kurdish-btn" data-src="https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-mountain"></i> <!-- Zagros - چیا -->
+                </span>
+                <span class="channel-name">Zagros TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://6476e46b58f91.streamlock.net/liveTrans/KurdmaxS0rani!/playlist.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-play"></i> <!-- Kurdmax - پلەی -->
+                </span>
+                <span class="channel-name">Kurdmax TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://6476e46b58f91.streamlock.net/liveTrans/SHOW2/playlist.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-video"></i> <!-- KurdmaxShow - ڤیدیۆ -->
+                </span>
+                <span class="channel-name">KurdmaxShow TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://svs.itworkscdn.net/rudawlive/rudawlive.smil/playlist.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-flag"></i> <!-- Rudaw - ئاڵا -->
+                </span>
+                <span class="channel-name">Rudaw TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://d1x82nydcxndze.cloudfront.net/live/index.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-globe"></i> <!-- Kurdistan24 - جیهان -->
+                </span>
+                <span class="channel-name">Kurdistan24</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/chunklist_w1840895338_b1700000_sleng_t64MTA4MHA=.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-star"></i> <!-- Kurdistan TV - ئەستێرە -->
+                </span>
+                <span class="channel-name">Kurdistan TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://live.kwikmotion.com/waarmedialive/waarmedia.smil/playlist.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-broadcast-tower"></i> <!-- WAAR TV - تاوەر -->
+                </span>
+                <span class="channel-name">WAAR TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://app-live.org/live/3268334b/index.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-book-open"></i> <!-- Amozhgari TV - کتێب -->
+                </span>
+                <span class="channel-name">Amozhgari TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://ava.site/upload/ava.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-microphone"></i> <!-- AVA TV - مایکرۆفۆن -->
+                </span>
+                <span class="channel-name">AVA TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://zindikurmanci.zaroktv.com.tr/hls/stream.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-child"></i> <!-- Zarok TV - منداڵ -->
+                </span>
+                <span class="channel-name">Zarok TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://nrttv.com/streamNRT.aspx">
+                <span class="channel-icon">
+                    <i class="fas fa-newspaper"></i> <!-- NRT TV - ڕۆژنامە -->
+                </span>
+                <span class="channel-name">NRT TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://maxtvs.net/channels?chname=Duhok+TV">
+                <span class="channel-icon">
+                    <i class="fas fa-city"></i> <!-- Duhok TV - شار -->
+                </span>
+                <span class="channel-name">Duhok TV</span>
+            </button>
+            
+            <button class="channel-btn kurdish-btn" data-src="https://live.playmax.eu/live/germaz/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-sun"></i> <!-- Gali Kurdistan TV - خۆر -->
+                </span>
+                <span class="channel-name">Gali Kurdistan TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://live.playmax.eu/live/pkk/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-leaf"></i> <!-- Sterk TV - گەڵا -->
+                </span>
+                <span class="channel-name">Sterk TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://live.playmax.eu/live/ronahi/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-lightbulb"></i> <!-- Ronahi TV - گڵۆپ -->
+                </span>
+                <span class="channel-name">Ronahi TV</span
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://live.playmax.eu/live/newroz/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-calendar-alt"></i> <!-- Newroz TV - ڕۆژژمێر -->
+                </span>
+                <span class="channel-name">Newroz TV</span>
+            </button>
+            <button class="channel-btn kurdish-btn" data-src="https://live.playmax.eu/live/medya/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-rss"></i> <!-- Medya News TV - RSS -->
+                </span>
+                <span class="channel-name">Medya News TV</span>
+            </button>
         </div>
 
-        <h3 class="category-title">القنوات الرياضية</h3>
+        <!-- کەناڵێن وەرزشی (Sport Channels) -->
+        <h3 class="category-title">کەناڵێن وەرزشی</h3>
         <div class="channel-list">
-            <button class="channel-btn" data-src="https://dd.alkoora.live/albaplayer/on-time-sport-1">BeinSport1 TV</button>
-            <button class="channel-btn" data-src="https://imn.iq/iraqia_entertainment">Iraqia Sport TV</button>
+            <button class="channel-btn sport-btn" data-src="https://dd.alkoora.live/albaplayer/on-time-sport-1">
+                <span class="channel-icon">
+                    <i class="fas fa-futbol"></i> <!-- BeinSport1 TV - تۆپی پێ -->
+                </span>
+                <span class="channel-name">BeinSport1 TV</span>
+            </button>
+            <button class="channel-btn sport-btn" data-src="https://imn.iq/iraqia_entertainment">
+                <span class="channel-icon">
+                    <i class="fas fa-trophy"></i> <!-- Iraqia Sport TV - جامی سەرکەوتن -->
+                </span>
+                <span class="channel-name">Iraqia Sport TV</span>
+            </button>
+            <button class="channel-btn sport-btn" data-src="https://live.playmax.eu/live/sport/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-tv"></i> <!-- Sport Channel 3 - تەلەفزیۆن -->
+                </span>
+                <span class="channel-name">Sport Channel 3</span>
+            </button>
+            <button class="channel-btn sport-btn" data-src="https://live.playmax.eu/live/sport/chunklist_w72433069.m3u8">
+                <span class="channel-icon">
+                    <i class="fas fa-medal"></i> <!-- Sport Channel 4 - مەدالیا -->
+                </span>
+                <span class="channel-name">Sport Channel 4</span>
+            </button>
         </div>
 
-        <h3 class="category-title">القنوات العربية والعالمية</h3>
-        <div class="channel-list">
-            <button class="channel-btn" data-src="https://tv-trtkurdi.medya.trt.com.tr/master.m3u8">TRTKurdi TV</button>
-            <button class="channel-btn" data-src="https://stream.skynewsarabia.com/hls/sna.m3u8">SkyNews TV</button>
-            <button class="channel-btn" data-src="https://www.youtube.com/embed/bNyUyrR0PHo?si=Ag6L2S_9oPU4YJNQ">Al Jazeera</button>
-            <button class="channel-btn" data-src="https://live.alarabiya.net/alarabiapublish/alhadath.smil/playlist.m3u8">Al-Hadath TV</button>
-        </div>
-
-        <h3 class="category-title">الإذاعات</h3>
-        <div class="channel-list">
-            <button class="channel-btn" data-src="https://stream.zeno.fm/unwq3jdyhmbuv?adtonosListenerId=01JQ8BXPG82XPXXHPY3DGRF7GB&aw_0_req_lsid=4eba9c7813187df27d76d4bea34c4188/">Duhok Radio</button>
-        </div>
-    </div>
-
-    <footer>
-        <p>Bagera Live TV © 2025 - جميع الحقوق محفوظة</p>
-        <p>هذا البرنامج مخصص للبث المباشر للقنوات التلفزيونية والإذاعية</p>
-    </footer>
-
-    <script>
-        const player = document.getElementById('main-player');
-        const channelBtns = document.querySelectorAll('.channel-btn');
-
-        // Set default channel
-        const defaultBtn = document.querySelector('.channel-btn.active');
-        player.src = defaultBtn.dataset.src;
-
-        // Add event listeners to all channel buttons
-        channelBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                channelBtns.forEach(b => b.classList.remove('active'));
-                
-                // Add active class to clicked button
-                btn.classList.add('active');
-                
-                // Change player source
-                player.src = btn.dataset.src;
-            });
-        });
-
-        // Handle player errors
-        player.addEventListener('error', (e) => {
-            console.error('Error loading channel:', e);
-            alert('عذراً، لا يمكن تحميل هذه القناة حالياً. يرجى اختيار قناة أخرى.');
-        });
-    </script>
-</body>
-</html>
+        <!-- کەناڵێن جیهانی (International Channels) -->
+        <h3 class="category-title">کەناڵێن
